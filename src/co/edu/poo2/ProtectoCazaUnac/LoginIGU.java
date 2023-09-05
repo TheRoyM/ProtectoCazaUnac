@@ -28,7 +28,7 @@ public class LoginIGU extends JFrame implements ActionListener {
         btnNuevoRegistro.addActionListener(this);
         btnNuevoRegistro.setForeground(Color.BLACK);
 
-        btnIngresar = new JButton("Iniciar sesión");
+        btnIngresar = new JButton("Ingresar");
         btnIngresar.setLocation(270,320);
         btnIngresar.setSize(130,30);
         btnIngresar.addActionListener(this);
@@ -58,13 +58,13 @@ public class LoginIGU extends JFrame implements ActionListener {
             //ocultar ventana
             this.setVisible(false);
             //ventana de registro de usuario
-            Registrarse registroVentana = new Registrarse();
+            LoginRegistro registroVentana = new LoginRegistro();
 
         } else if (e.getSource() == btnIngresar) {
             //ocultar ventana
             this.setVisible(false);
             //  ventana de inicio de sesión
-            InicioUsuario inicioVentana = new InicioUsuario();
+            LoginUsuario inicioVentana = new LoginUsuario();
         }
     }
 

@@ -8,20 +8,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class Registrarse extends JFrame implements ActionListener {
+public class LoginRegistro extends JFrame implements ActionListener {
     static JButton btnNuevoRegistro,btnIngresar, btnLeer;
     static JTextField txtNombre,txtUserName,txtCorreo;
     static String linea;
     static JLabel lblImagenUsuario, lblNombre, lblCorreo, lblUserName, lblPass;
     static JTextArea txtTablero;
-    static ArrayList<Usuario> listaUsers;
+    static ArrayList<Usuario> listaUsers = new ArrayList<>();
     private JPasswordField passwordField;
 
-    public Registrarse(){
-
-        txtTablero = new JTextArea();
-        txtTablero.setLocation(30,70);
-        txtTablero.setSize(100,100);
+    public LoginRegistro(){
 
         lblImagenUsuario = new JLabel(new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\login.png"));
         lblImagenUsuario.setLocation(170, 40);
@@ -61,8 +57,6 @@ public class Registrarse extends JFrame implements ActionListener {
         // para que muestre asteriscos en lugar de los caracteres reales
         passwordField.setEchoChar('*');
 
-
-
         btnNuevoRegistro = new JButton("Registrarse");
         btnNuevoRegistro.setLocation(80,380);
         btnNuevoRegistro.setSize(160,30);
@@ -94,20 +88,20 @@ public class Registrarse extends JFrame implements ActionListener {
         add(txtNombre);
         add(txtCorreo);
         add(txtUserName);
-        add(txtTablero);
         add(passwordField);
+
+        btnNuevoRegistro.addActionListener(this);
+        btnIngresar.addActionListener(this);
+        btnLeer.addActionListener(this);
 
         setLayout(null);
         setSize(500,500);
-        setTitle("ProtectoCazaUnac");
+        setTitle("Registrarse en ProtectoCazaUnac");
 
         setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         setLocation(500,250);
         setVisible (true);
 
-        btnNuevoRegistro.addActionListener(this);
-        btnIngresar.addActionListener(this);
-        btnLeer.addActionListener(this);
     }
 
 
@@ -119,8 +113,8 @@ public class Registrarse extends JFrame implements ActionListener {
                 txtTablero.append("");
                 linea = LeerArchivo.readFile("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuario.txt");
                 txtTablero.setText(linea);
-                txtTablero.append("Archivo leido\nLista creada");
-                listaUsers= Listas.crearLista(linea);
+                txtTablero.append("Archivo leido\n");
+                listaUsers = Listas.crearLista(linea);
             }catch (IOException ioe){
                 System.out.println(ioe);
             }
@@ -136,6 +130,7 @@ public class Registrarse extends JFrame implements ActionListener {
             Usuario nuevoUsuario = new Usuario(nombre, correo, userName, password);
             listaUsers.add(nuevoUsuario);
 
+
             // Limpiar los campos después de registrar
             txtNombre.setText("");
             txtCorreo.setText("");
@@ -146,13 +141,23 @@ public class Registrarse extends JFrame implements ActionListener {
 
         }
 
+        if (e.getSource().equals(btnNuevoRegistro)){
+            String escribir="";
+            for (Usuario user :listaUsers){
+                escribir=escribir+";"+user.getNombreCompleto()
+                        +","+user.getCorreoElectronico()+","+user.getUser()+","+ user.getPassword();
+            }
+            EscribirArchivo.writeFile(escribir,"C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuario.txt");
+        }
+
         else if (e.getSource() == btnIngresar) {
             //ocultar ventana
             this.setVisible(false);
             //  ventana de inicio de sesión
-            InicioUsuario inicioVentana = new InicioUsuario();
+            LoginUsuario inicioVentana = new LoginUsuario();
         }
 
     }
+
 
 }

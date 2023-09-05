@@ -4,14 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LoginUsuario extends JFrame implements ActionListener {
 
     static JButton btnLeer,btnIngresar, btnRegresar;
-    static JLabel lblImagenUsuario, lblCorreo,lblPass;
+    static JLabel lblImagenUsuario, lblUser,lblPass;
     static String linea;
-    static JTextField txtCorreo;
+    static JTextField txtUsername;
 
     static ArrayList<Usuario> listaUsers = new ArrayList<>();
     private JPasswordField passwordField;
@@ -19,18 +22,23 @@ public class LoginUsuario extends JFrame implements ActionListener {
 
 
     public LoginUsuario(){
+        btnLeer = new JButton("Leer AP");
+        btnLeer.setLocation(50,30);
+        btnLeer.setSize(90,30);
+        btnLeer.addActionListener(this);
+        btnLeer.setForeground(Color.BLACK);
 
         lblImagenUsuario = new JLabel(new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\login.png"));
         lblImagenUsuario.setLocation(170, 40);
         lblImagenUsuario.setSize(150, 150);
 
-        lblCorreo = new JLabel("UserName o Correo Electronico");
-        lblCorreo.setLocation(50,220);
-        lblCorreo.setSize(190,30);
-        lblCorreo.setForeground(Color.BLACK);
-        txtCorreo = new JTextField(10);
-        txtCorreo.setLocation(70,250);
-        txtCorreo.setSize(150,30);
+        lblUser = new JLabel("UserName");
+        lblUser.setLocation(100,220);
+        lblUser.setSize(190,30);
+        lblUser.setForeground(Color.BLACK);
+        txtUsername = new JTextField(10);
+        txtUsername.setLocation(70,250);
+        txtUsername.setSize(150,30);
 
 
         lblPass = new JLabel("Contraseña");
@@ -60,16 +68,18 @@ public class LoginUsuario extends JFrame implements ActionListener {
 
         //adicionar
         add(lblImagenUsuario);
-        add(lblCorreo);
+        add(lblUser);
         add(lblPass);
-        add(txtCorreo);
+        add(txtUsername);
         add(passwordField);
         add(btnIngresar);
         add(btnRegresar);
+        add(btnLeer);
 
 
         btnIngresar.addActionListener(this);
         btnRegresar.addActionListener(this);
+        btnLeer.addActionListener(this);
 
 
 
@@ -91,6 +101,52 @@ public class LoginUsuario extends JFrame implements ActionListener {
             this.setVisible(false);
             //  ventana de inicio de sesión
             LoginIGU inicioVentana = new LoginIGU();
+
+        }else if (e.getSource() == btnIngresar) {
+            // Obtener el nombre de usuario o correo y la contraseña ingresados
+
+            String nombreUsuario = txtUsername.getText();
+            String contrasena = new String(passwordField.getPassword());
+
+            // Validar el usuario y contraseña con el archivo de usuarios
+            if (validarCredenciales(nombreUsuario, contrasena)) {
+
+
+                JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.");
+            }
+            else {
+                // Las credenciales no son válidas, mostrar mensaje de error.
+                JOptionPane.showMessageDialog(null, "Credenciales incorrectas. Por favor, inténtelo de nuevo.");
+            }
         }
+    }
+    private boolean validarCredenciales(String nombreUsuario, String contrasena) {
+        // Leo el archivo de usuarios y comparo con las credenciales ingresadas
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuario.txt"));
+
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length == 4) {
+                    String nombreGuardado = partes[0];
+                    String correoGuardado = partes[1];
+                    String usuarioGuardado = partes[2];
+                    String contrasenaGuardada = partes[3];
+
+                    // Compara las credenciales
+                    if (usuarioGuardado.equals(nombreUsuario) || correoGuardado.equals(nombreUsuario) && contrasenaGuardada.equals(contrasena))  {
+                        br.close();
+                        return true; // Credenciales válidas
+                    }
+                }
+            }
+
+            br.close(); // Cierra el archivo
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false; // Credenciales no válidas
     }
 }

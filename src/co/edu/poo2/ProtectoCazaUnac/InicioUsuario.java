@@ -64,10 +64,7 @@ public class InicioUsuario extends JFrame implements ActionListener {
         txtTipodeUsuario.setLocation(270,150);
         txtTipodeUsuario.setSize(150,30);
 
-        lblImagenUsuario = new JLabel(new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\usuario.png"));
-        lblImagenUsuario.setLocation(270, 190);
-        lblImagenUsuario.setSize(100, 100);
-        add(lblImagenUsuario);
+
 
 
         //adicionar
@@ -93,44 +90,8 @@ public class InicioUsuario extends JFrame implements ActionListener {
         setVisible (true);
 
     }
-    public static void main(String[] args) {
-        InicioUsuario ventana = new InicioUsuario();
 
-    }
     @Override
     public void actionPerformed(ActionEvent e) {
-        String listar="";
-        if (e.getSource().equals(btnListar)) {
-            for (Usuario c : listaUsers) {
-                listar = listar + c.getUser() + "-" + c.getPassword() + c.getPassword2() + "\n";
-            }
-            txtTablero.setText("");
-            txtTablero.append(listar);
-
-        }
-
-        if (e.getSource().equals(btnLeer)){
-            try {
-                txtTablero.append("");
-                linea = LeerArchivo.readFile("C:\\archivos\\QuizPoo2_Ejercicios\\src\\usuarios.txt");
-                txtTablero.setText(linea);
-                txtTablero.append("Archivo leido\nLista creada");
-                //listaUsers=Lista.crearLista(linea);
-
-
-            }catch (IOException ioe){
-                System.out.println(ioe);
-            }
-        }
-        if (e.getSource().equals(btnNuevo)){
-            String nombre = txtNombre.getText();
-            String id = txtid.getText();
-            String tipoUsuario = txtTipodeUsuario.getText();
-
-            //Usuario user = new Usuario(use,id,tipoUsuario);
-            //listaUsers.add(user);
-
-
-        }
     }
 }

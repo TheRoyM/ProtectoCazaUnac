@@ -13,7 +13,6 @@ public class LoginRegistro extends JFrame implements ActionListener {
     static JTextField txtNombre,txtUserName,txtCorreo;
     static String linea;
     static JLabel lblImagenUsuario, lblNombre, lblCorreo, lblUserName, lblPass;
-    static JTextArea txtTablero;
     static ArrayList<Usuario> listaUsers = new ArrayList<>();
     private JPasswordField passwordField;
 
@@ -54,8 +53,7 @@ public class LoginRegistro extends JFrame implements ActionListener {
         passwordField = new JPasswordField(10);
         passwordField.setLocation(260, 280);
         passwordField.setSize(150, 30);
-        // para que muestre asteriscos en lugar de los caracteres reales
-        passwordField.setEchoChar('*');
+        passwordField.setEchoChar('*');  // para que muestre asteriscos en lugar de los caracteres reales
 
         btnNuevoRegistro = new JButton("Registrarse");
         btnNuevoRegistro.setLocation(80,380);
@@ -68,6 +66,8 @@ public class LoginRegistro extends JFrame implements ActionListener {
         btnIngresar.setSize(130,30);
         btnIngresar.addActionListener(this);
         btnIngresar.setForeground(Color.BLACK);
+
+
 
         btnLeer = new JButton("Leer AP");
         btnLeer.setLocation(50,30);
@@ -90,8 +90,7 @@ public class LoginRegistro extends JFrame implements ActionListener {
         add(txtUserName);
         add(passwordField);
 
-        btnNuevoRegistro.addActionListener(this);
-        btnIngresar.addActionListener(this);
+
         btnLeer.addActionListener(this);
 
         setLayout(null);
@@ -110,10 +109,7 @@ public class LoginRegistro extends JFrame implements ActionListener {
 
         if (e.getSource().equals(btnLeer)){
             try {
-                txtTablero.append("");
                 linea = LeerArchivo.readFile("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuario.txt");
-                txtTablero.setText(linea);
-                txtTablero.append("Archivo leido\n");
                 listaUsers = Listas.crearLista(linea);
             }catch (IOException ioe){
                 System.out.println(ioe);
@@ -144,8 +140,7 @@ public class LoginRegistro extends JFrame implements ActionListener {
         if (e.getSource().equals(btnNuevoRegistro)){
             String escribir="";
             for (Usuario user :listaUsers){
-                escribir=escribir+";"+user.getNombreCompleto()
-                        +","+user.getCorreoElectronico()+","+user.getUser()+","+ user.getPassword();
+                escribir = ";"+user.getNombreCompleto() +","+user.getCorreoElectronico()+","+user.getUser()+","+ user.getPassword();
             }
             EscribirArchivo.writeFile(escribir,"C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuario.txt");
         }

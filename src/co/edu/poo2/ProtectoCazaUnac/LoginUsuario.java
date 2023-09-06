@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class LoginUsuario extends JFrame implements ActionListener {
 
-    static JButton btnLeer,btnIngresar, btnRegresar;
+    static JButton btnLeer,btnIngresar, btnRegresar,btnPassOlvi;
     static JLabel lblImagenUsuario, lblUser,lblPass;
     static String linea;
     static JTextField txtUsername;
@@ -28,8 +28,8 @@ public class LoginUsuario extends JFrame implements ActionListener {
         btnLeer.addActionListener(this);
         btnLeer.setForeground(Color.BLACK);
 
-        lblImagenUsuario = new JLabel(new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\login.png"));
-        lblImagenUsuario.setLocation(170, 40);
+        lblImagenUsuario = new JLabel(new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\LoginI.png"));
+        lblImagenUsuario.setLocation(170, 80);
         lblImagenUsuario.setSize(150, 150);
 
         lblUser = new JLabel("UserName");
@@ -64,6 +64,12 @@ public class LoginUsuario extends JFrame implements ActionListener {
         btnRegresar.addActionListener(this);
         btnRegresar.setForeground(Color.BLACK);
 
+        btnPassOlvi = new JButton("Haz olvidado tu contraseña");
+        btnPassOlvi.setLocation(170,380);
+        btnPassOlvi.setSize(130,30);
+        btnPassOlvi.addActionListener(this);
+        btnPassOlvi.setForeground(Color.BLACK);
+
 
 
         //adicionar
@@ -74,11 +80,11 @@ public class LoginUsuario extends JFrame implements ActionListener {
         add(passwordField);
         add(btnIngresar);
         add(btnRegresar);
+        add(btnPassOlvi);
         add(btnLeer);
 
 
-        btnIngresar.addActionListener(this);
-        btnRegresar.addActionListener(this);
+
         btnLeer.addActionListener(this);
 
 
@@ -95,8 +101,16 @@ public class LoginUsuario extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnIngresar) {
+            //ocultar ventana
+            this.setVisible(false);
+            //  ventana de inicio de sesión
+            LoginAnimal inicioVentana = new LoginAnimal();
 
-        if (e.getSource() == btnRegresar) {
+        }
+
+
+        else if (e.getSource() == btnRegresar) {
             //ocultar ventana
             this.setVisible(false);
             //  ventana de inicio de sesión
@@ -112,10 +126,10 @@ public class LoginUsuario extends JFrame implements ActionListener {
             if (validarCredenciales(nombreUsuario, contrasena)) {
 
 
-                JOptionPane.showMessageDialog(null, "Inicio de sesión exitoso.");
+                JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.");
             }
             else {
-                // Las credenciales no son válidas, mostrar mensaje de error.
+                // Las credenciales no son válidas
                 JOptionPane.showMessageDialog(null, "Credenciales incorrectas. Por favor, inténtelo de nuevo.");
             }
         }
@@ -129,13 +143,11 @@ public class LoginUsuario extends JFrame implements ActionListener {
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");
                 if (partes.length == 4) {
-                    String nombreGuardado = partes[0];
-                    String correoGuardado = partes[1];
-                    String usuarioGuardado = partes[2];
-                    String contrasenaGuardada = partes[3];
+                    String usuarioGuardado = partes[2].trim();
+                    String contrasenaGuardada = partes[3].trim();
 
                     // Compara las credenciales
-                    if (usuarioGuardado.equals(nombreUsuario) || correoGuardado.equals(nombreUsuario) && contrasenaGuardada.equals(contrasena))  {
+                    if (usuarioGuardado.equals(nombreUsuario)&& contrasenaGuardada.equals(contrasena))  {
                         br.close();
                         return true; // Credenciales válidas
                     }

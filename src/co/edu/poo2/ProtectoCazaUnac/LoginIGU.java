@@ -1,6 +1,7 @@
 package co.edu.poo2.ProtectoCazaUnac;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,14 +12,16 @@ public class LoginIGU extends JFrame implements ActionListener {
     static JLabel lblImagenUsuario, lblDatos;
 
     public LoginIGU(){
-        lblDatos = new JLabel("Bienvenido");
+        lblDatos = new JLabel("Bienvenido a ProtectoCazaUnac");
         Font font = new Font("Forte", Font.BOLD, 20); // tipo de fuente
         lblDatos.setFont(font);
-        lblDatos.setLocation(200,50);
-        lblDatos.setSize(150,30);
+        lblDatos.setLocation(100,30);
+        lblDatos.setSize(290,30);
         lblDatos.setForeground(Color.BLACK);
 
-        lblImagenUsuario = new JLabel(new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\ardill.png"));
+        lblImagenUsuario = new JLabel(new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\Inicio.png"));
+        Border borde = BorderFactory.createLineBorder(Color.BLACK, 2);
+        lblImagenUsuario.setBorder(borde);
         lblImagenUsuario.setLocation(120, 60);
         lblImagenUsuario.setSize(250, 250);
 

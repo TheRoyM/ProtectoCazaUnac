@@ -12,7 +12,6 @@ public class Listas {
             atributos = Usuario[i].split(",");
             user = new Usuario (atributos[0],atributos[1],atributos[2],atributos[3]);
             listaUsuarios.add(user);
-
         }
         return listaUsuarios;
 

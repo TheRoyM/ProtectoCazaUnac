@@ -1,10 +1,10 @@
 package co.edu.poo2.ProtectoCazaUnac;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class LoginIGU extends JFrame implements ActionListener {
 
@@ -20,8 +20,6 @@ public class LoginIGU extends JFrame implements ActionListener {
         lblDatos.setForeground(Color.BLACK);
 
         lblImagenUsuario = new JLabel(new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\Inicio.png"));
-        Border borde = BorderFactory.createLineBorder(Color.BLACK, 2);
-        lblImagenUsuario.setBorder(borde);
         lblImagenUsuario.setLocation(120, 60);
         lblImagenUsuario.setSize(250, 250);
 
@@ -58,16 +56,27 @@ public class LoginIGU extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnNuevoRegistro) {
-            //ocultar ventana
+            // Ocultar ventana actual
             this.setVisible(false);
-            //ventana de registro de usuario
-            LoginRegistro registroVentana = new LoginRegistro();
-
+            // Crear y mostrar la ventana de registro de usuario
+            RegistroIGU registroVentana = null;
+            try {
+                registroVentana = new RegistroIGU();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            registroVentana.setVisible(true);
         } else if (e.getSource() == btnIngresar) {
-            //ocultar ventana
+            // Ocultar ventana actual
             this.setVisible(false);
-            //  ventana de inicio de sesión
-            LoginUsuario inicioVentana = new LoginUsuario();
+            // Crear y mostrar la ventana de inicio de sesión
+            UsuarioIGU inicioVentana = null;
+            try {
+                inicioVentana = new UsuarioIGU();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            inicioVentana.setVisible(true);
         }
     }
 

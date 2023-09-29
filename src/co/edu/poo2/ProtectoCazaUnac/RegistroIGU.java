@@ -4,22 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class LoginRegistro extends JFrame implements ActionListener {
-    static JButton btnNuevoRegistro,btnIngresar, btnLeer;
+public class RegistroIGU extends JFrame implements ActionListener {
+    static JButton btnNuevoRegistro,btnIngresar;
     static JTextField txtNombre,txtUserName,txtCorreo;
     static String linea;
-    static JLabel lblImagenUsuario, lblNombre, lblCorreo, lblUserName, lblPass;
+    static JLabel lblImagenUsuario, lblNombre, lblCorreo, lblUserName, lblPass,lblInformacion;
     static ArrayList<Usuario> listaUsers = new ArrayList<>();
-    private JPasswordField passwordField;
+    private final JPasswordField passwordField;
 
-    public LoginRegistro(){
+    public RegistroIGU() throws IOException {
 
         lblImagenUsuario = new JLabel(new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\login.png"));
-        lblImagenUsuario.setLocation(170, 40);
+        lblImagenUsuario.setLocation(160, 40);
         lblImagenUsuario.setSize(150, 150);
 
         lblNombre = new JLabel("Nombres");
@@ -67,13 +69,16 @@ public class LoginRegistro extends JFrame implements ActionListener {
         btnIngresar.addActionListener(this);
         btnIngresar.setForeground(Color.BLACK);
 
+        // Leer archivo plano
+        String infoArchivo = LeerArchivo.readFile("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuarios.txt");
+        lblInformacion = new JLabel("Archivo cargado");
+        lblInformacion.setSize(100,100);
+        lblInformacion.setLocation(20, 5);
 
+        // Crear lista de usuarios
+        listaUsers = Listas.crearLista(infoArchivo);
+        lblInformacion.setText(lblInformacion.getText() + " :: Lista creada");
 
-        btnLeer = new JButton("Leer AP");
-        btnLeer.setLocation(50,30);
-        btnLeer.setSize(90,30);
-        btnLeer.addActionListener(this);
-        btnLeer.setForeground(Color.BLACK);
 
 
         //botonera
@@ -81,9 +86,9 @@ public class LoginRegistro extends JFrame implements ActionListener {
         add(lblCorreo);
         add(lblUserName);
         add(lblPass);
+        add(lblInformacion);
         add(btnNuevoRegistro);
         add(btnIngresar);
-        add(btnLeer);
         add(lblImagenUsuario);
         add(txtNombre);
         add(txtCorreo);
@@ -91,7 +96,6 @@ public class LoginRegistro extends JFrame implements ActionListener {
         add(passwordField);
 
 
-        btnLeer.addActionListener(this);
 
         setLayout(null);
         setSize(500,500);
@@ -102,57 +106,60 @@ public class LoginRegistro extends JFrame implements ActionListener {
         setVisible (true);
 
     }
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        if (e.getSource().equals(btnLeer)){
-            try {
-                linea = LeerArchivo.readFile("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuario.txt");
-                listaUsers = Listas.crearLista(linea);
-            }catch (IOException ioe){
-                System.out.println(ioe);
-            }
-        }
-
-        else if (e.getSource() == btnNuevoRegistro) {
+        if (e.getSource() == btnNuevoRegistro) {
+            // Obtener los valores de los campos
             String nombre = txtNombre.getText();
             String correo = txtCorreo.getText();
             String userName = txtUserName.getText();
             char[] passwordChars = passwordField.getPassword();
             String password = new String(passwordChars);
 
-            Usuario nuevoUsuario = new Usuario(nombre, correo, userName, password);
-            listaUsers.add(nuevoUsuario);
+            // Verificar que todos los campos obligatorios estén completos
+            if (nombre.isEmpty() || correo.isEmpty() || userName.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios. Por favor, complete todos los campos.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
+            } else {
+                // Realizar el registro si todos los campos están completos
+                Usuario nuevoUsuario = new Usuario(nombre, correo, userName, password);
+                listaUsers.add(nuevoUsuario);
 
+                // Limpiar los campos después de registrar
+                txtNombre.setText("");
+                txtCorreo.setText("");
+                txtUserName.setText("");
+                passwordField.setText("");
 
-            // Limpiar los campos después de registrar
-            txtNombre.setText("");
-            txtCorreo.setText("");
-            txtUserName.setText("");
-            passwordField.setText("");
+                JOptionPane.showMessageDialog(null, "Registro exitoso.");
 
-            JOptionPane.showMessageDialog(null, "Registro exitoso.");
-
-        }
-
-        if (e.getSource().equals(btnNuevoRegistro)){
-            String escribir="";
-            for (Usuario user :listaUsers){
-                escribir = ";"+user.getNombreCompleto() +","+user.getCorreoElectronico()+","+user.getUser()+","+ user.getPassword();
+                // Guardar la lista de usuarios en el archivo "usuarios.txt" sin sobrescribir
+                guardarUsuariosEnArchivo("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuarios.txt", listaUsers);
             }
-            EscribirArchivo.writeFile(escribir,"C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuario.txt");
         }
 
-        else if (e.getSource() == btnIngresar) {
-            //ocultar ventana
+         else if (e.getSource() == btnIngresar) {
+            // Ocultar ventana
             this.setVisible(false);
-            //  ventana de inicio de sesión
-            LoginUsuario inicioVentana = new LoginUsuario();
+            // Ventana de inicio de sesión
+            try {
+                UsuarioIGU inicioVentana = new UsuarioIGU();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
-
     }
 
+    private void guardarUsuariosEnArchivo(String nombreArchivo, ArrayList<Usuario> usuarios) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo))) {
+            for (Usuario user : usuarios) {
+                String linea = user.getNombreCompleto() + "," + user.getCorreoElectronico() + ","
+                        + user.getUser() + "," + user.getPassword() + ";";
+                writer.write(linea);
+                writer.newLine(); // Agrega una nueva línea después de cada usuario
 
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

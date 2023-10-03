@@ -76,7 +76,7 @@ public class RegistroIGU extends JFrame implements ActionListener {
         lblInformacion.setLocation(20, 5);
 
         // Crear lista de usuarios
-        listaUsers = Listas.crearLista(infoArchivo);
+        listaUsers = Listas.crearUsuarios(infoArchivo);
         lblInformacion.setText(lblInformacion.getText() + " :: Lista creada");
 
 

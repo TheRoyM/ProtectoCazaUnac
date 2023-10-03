@@ -1,0 +1,3 @@
+Vulpes,Zorro,Preocupacion menor,Depredador,Bosques,avistado Lunes 8 sept Rojizo con una altura de 22 cms,Cerca de la unac
+Sciurus vulgaris,Ardilla,sin riesgo,Consumidor secundario,arboles y bosque,avistada viernes 15 sept ardilla color rojizo,cerca de la Unac
+Psittacoidea,Loro,en peligro de extinción,Consumidor secundario,Palmas y bosques,Avistado el Domingo 15 oct Loro grande de color verde,Laureles

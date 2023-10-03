@@ -3,7 +3,7 @@ package co.edu.poo2.ProtectoCazaUnac;
 import java.util.ArrayList;
 
 public class Listas {
-    static ArrayList<Usuario> crearLista(String usuarios){
+    static ArrayList<Usuario> crearUsuarios(String usuarios){
         ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
         if (usuarios != null) {
@@ -30,7 +30,7 @@ public class Listas {
         return listaUsuarios;
     }
 
-    static ArrayList<Animal> crearListaA(String animales) {
+    static ArrayList<Animal> crearAnimales(String animales) {
         ArrayList<Animal> listaAnimales = new ArrayList<>();
         String[] Animales = animales.split(";");
         Animal a;

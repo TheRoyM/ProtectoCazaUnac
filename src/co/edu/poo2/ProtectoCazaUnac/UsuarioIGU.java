@@ -72,7 +72,7 @@ public class UsuarioIGU extends JFrame implements ActionListener {
         lblInformacion.setLocation(50, 30);
 
         // Crear lista de usuarios
-        listaUsers = Listas.crearLista(infoArchivo);
+        listaUsers = Listas.crearUsuarios(infoArchivo);
         lblInformacion.setText(lblInformacion.getText() + " :: Lista creada");
 
 
@@ -133,7 +133,12 @@ public class UsuarioIGU extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso.");
 
                 // Redirigir a la ventana
-                AnimalesIGU animales = new AnimalesIGU();
+                AnimalesIGU animales = null;
+                try {
+                    animales = new AnimalesIGU();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 animales.setVisible(true);
 
                 // Cerrar la ventana actual

@@ -5,110 +5,209 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class AnimalesIGU extends JFrame implements ActionListener {
-    // Declaración de componentes de la interfaz
-    private JButton btnVerAnimales;
-    private JButton btnAgregarAnimal;
-    private JTable tablaAnimales;
-    private DefaultTableModel modeloTabla;
-    private ArrayList<Animal> listaAnimales;
 
-    public AnimalesIGU() {
-        // Inicialización de componentes
-        btnVerAnimales = new JButton("Ver Animales");
-        btnAgregarAnimal = new JButton("Agregar Animal");
-        modeloTabla = new DefaultTableModel();
-        tablaAnimales = new JTable(modeloTabla);
+    static JButton btnVerAnimales, btnAgregarAnimal, btnEliminarAnimal;
+    static JLabel lblInformacion;
+    static JTable tablaAnimales;
+    static DefaultTableModel modeloTabla;
+    static ArrayList<Animal> listaAnimales = new ArrayList<>();
+
+    public AnimalesIGU() throws IOException {
         listaAnimales = new ArrayList<>();
 
+        btnVerAnimales = new JButton("Ver Animales");
+        btnVerAnimales.setBounds(20, 20, 120, 30);
+        btnVerAnimales.addActionListener(this);
+
+        btnAgregarAnimal = new JButton("Agregar Animal");
+        btnAgregarAnimal.setBounds(20, 60, 120, 30);
+        btnAgregarAnimal.addActionListener(this);
+
+        btnEliminarAnimal = new JButton("Eliminar Animal");
+        btnEliminarAnimal.setBounds(20, 100, 100, 30);
+        btnEliminarAnimal.addActionListener(this);
+
         // Configuración de la tabla
-        tablaAnimales.setLocation(10,70);
+        modeloTabla = new DefaultTableModel();
+        tablaAnimales = new JTable(modeloTabla);
+
+        // Agregar la tabla a un JScrollPane
+        JScrollPane scrollPane = new JScrollPane(tablaAnimales);
+        scrollPane.setBounds(200, 20, 990, 550);
+        // Agregar columnas a la tabla
         modeloTabla.addColumn("Nombre cientifico");
         modeloTabla.addColumn("Nombre");
         modeloTabla.addColumn("Conservación");
         modeloTabla.addColumn("Rol Ecologico");
-        modeloTabla.addColumn("Habitad");
-        modeloTabla.addColumn("Descripsion del animal avistado");
+        modeloTabla.addColumn("Habitat");
+        modeloTabla.addColumn("Descripción del animal avistado");
         modeloTabla.addColumn("Lugar de avistamiento");
 
-        add(tablaAnimales);
 
-        // Configuración del diseño de la ventana
-        setTitle("Gestión de Animales");
-        setSize(600, 400);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new FlowLayout());
+        // Leer archivo plano
+        String infoArchivo = LeerArchivo.readFile("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\animales.txt");
+        JLabel lblInformacion = new JLabel("Archivo cargado");
+      lblInformacion.setBounds(20,700,100,30);
 
-        // Agregar componentes a la ventana
-        add(btnVerAnimales);
+        // Crear lista de usuarios
+        listaAnimales = Listas.crearAnimales(infoArchivo);
+        lblInformacion.setText(lblInformacion.getText() + " :: Lista creada");
+
+
         add(btnAgregarAnimal);
-        add(new JScrollPane(tablaAnimales));
-
-        // Agregar listeners a los botones
-        btnVerAnimales.addActionListener(this);
-        btnAgregarAnimal.addActionListener(this);
-
-        setVisible(true);
+        add(btnVerAnimales);
+        add(btnEliminarAnimal);
+        add(lblInformacion);
+        add(scrollPane);
         setLayout(null);
-        setSize(500,500);
-        setTitle("Animales en ProtectoCazaUnac ");
+        setTitle("Gestión de Animales");
+        setSize(1300, 800);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null); // Centrar la ventana en la pantalla
+        setVisible(true);
 
-        setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-        setLocation(500,250);
+
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnVerAnimales) {
-            // Cargar y mostrar la lista de animales desde el archivo
             cargarAnimalesDesdeArchivo();
             mostrarAnimalesEnTabla();
         } else if (e.getSource() == btnAgregarAnimal) {
-            // Abrir una ventana para agregar un nuevo animal
+            agregarAnimal();
+        } else if (e.getSource() == btnEliminarAnimal) {
+            eliminarAnimal();
         }
     }
 
     private void cargarAnimalesDesdeArchivo() {
-        listaAnimales.clear(); // Limpiar la lista antes de cargar nuevos datos
+        listaAnimales.clear();
         try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\animales.txt"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
+                System.out.println("Leyendo línea: " + linea);
                 String[] partes = linea.split(",");
                 if (partes.length == 7) {
                     Animal animal = getAnimal(partes);
                     listaAnimales.add(animal);
+                } else {
+                    System.err.println("Línea no válida: " + linea);
                 }
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-
     private static Animal getAnimal(String[] partes) {
         String nombreCientifico = partes[0].trim();
         String nombre = partes[1].trim();
         String conservacion = partes[2].trim();
         String rolEcologico = partes[3].trim();
-        String habitad = partes[4].trim();
-        String descripsion = partes[5].trim();
-        String lugaravistamiento = partes[6].trim();
-        Animal animal = new Animal(nombreCientifico, nombre,conservacion, rolEcologico,habitad,descripsion,lugaravistamiento);
+        String habitat = partes[4].trim();
+        String descripcion = partes[5].trim();
+        String lugarAvistamiento = partes[6].trim();
+        Animal animal = new Animal(nombreCientifico, nombre, conservacion, rolEcologico, habitat, descripcion, lugarAvistamiento);
         return animal;
     }
 
     private void mostrarAnimalesEnTabla() {
         modeloTabla.setRowCount(0); // Limpiar la tabla antes de agregar nuevos datos
         for (Animal animal : listaAnimales) {
-            Object[] fila = {animal.getNombreCientifico(), animal.getNombre(), animal.getConservacion(), animal.getRolEcologico(),animal.getHabitad()+
-            animal.getDescripsionAnimal(), animal.getLugarAvistamiento()};
+            Object[] fila = {
+                    animal.getNombreCientifico(),
+                    animal.getNombre(),
+                    animal.getConservacion(),
+                    animal.getRolEcologico(),
+                    animal.getHabitad(),
+                    animal.getDescripsionAnimal(),
+                    animal.getLugarAvistamiento()
+            };
             modeloTabla.addRow(fila);
         }
+        // Asegúrate de que la tabla se repinte
+        modeloTabla.fireTableDataChanged();
     }
-    
+
+    private void agregarAnimal() {
+        JTextField txtNombreCientifico = new JTextField();
+        JTextField txtNombre = new JTextField();
+        JTextField txtConservacion = new JTextField();
+        JTextField txtRolEcologico = new JTextField();
+        JTextField txtHabitat = new JTextField();
+        JTextField txtDescripcion = new JTextField();
+        JTextField txtLugarAvistamiento = new JTextField();
+
+        JPanel panel = new JPanel(new GridLayout(7, 2));
+        panel.add(new JLabel("Nombre Científico:"));
+        panel.add(txtNombreCientifico);
+        panel.add(new JLabel("Nombre:"));
+        panel.add(txtNombre);
+        panel.add(new JLabel("Conservación:"));
+        panel.add(txtConservacion);
+        panel.add(new JLabel("Rol Ecológico:"));
+        panel.add(txtRolEcologico);
+        panel.add(new JLabel("Habitat:"));
+        panel.add(txtHabitat);
+        panel.add(new JLabel("Descripción:"));
+        panel.add(txtDescripcion);
+        panel.add(new JLabel("Lugar de Avistamiento:"));
+        panel.add(txtLugarAvistamiento);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Agregar Animal", JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            String nombreCientifico = txtNombreCientifico.getText();
+            String nombre = txtNombre.getText();
+            String conservacion = txtConservacion.getText();
+            String rolEcologico = txtRolEcologico.getText();
+            String habitat = txtHabitat.getText();
+            String descripcion = txtDescripcion.getText();
+            String lugarAvistamiento = txtLugarAvistamiento.getText();
+
+            Animal nuevoAnimal = new Animal(nombreCientifico, nombre, conservacion, rolEcologico, habitat,
+                    descripcion, lugarAvistamiento);
+
+            listaAnimales.add(nuevoAnimal);
+
+            guardarAnimalesEnArchivo();
+
+            mostrarAnimalesEnTabla();
+        }
+    }
+
+    private void eliminarAnimal() {
+        int filaSeleccionada = tablaAnimales.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de eliminar este animal?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                int indiceAnimal = tablaAnimales.convertRowIndexToModel(filaSeleccionada);
+                listaAnimales.remove(indiceAnimal);
+                guardarAnimalesEnArchivo();
+                mostrarAnimalesEnTabla();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecciona un animal para eliminar.");
+        }
+    }
+
+    private void guardarAnimalesEnArchivo() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\animales.txt"))) {
+            for (Animal animal : listaAnimales) {
+                String linea = String.format("%s,%s,%s,%s,%s,%s,%s",animal.getNombreCientifico(), animal.getNombre(),
+                        animal.getConservacion(), animal.getRolEcologico(), animal.getHabitad(),
+                        animal.getDescripsionAnimal(), animal.getLugarAvistamiento());
+                bw.write(linea);
+                bw.newLine();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

@@ -12,7 +12,7 @@ public class LoginIGU extends JFrame implements ActionListener {
     static JLabel lblImagenUsuario, lblDatos;
 
     public LoginIGU(){
-        lblDatos = new JLabel("Bienvenido a ProtectoUnacAnimal");
+        lblDatos = new JLabel("Bienvenido A ProtectoUnacAnimal");
         Font font = new Font("Forte", Font.BOLD, 20); // tipo de fuente
         lblDatos.setFont(font);
         lblDatos.setLocation(100,30);

@@ -1,4 +1,10 @@
-package co.edu.poo2.ProtectoCazaUnac;
+package co.edu.poo2.ProtectoCazaUnac.interfazesGraficas;
+
+import co.edu.poo2.ProtectoCazaUnac.LeerArchivo;
+import co.edu.poo2.ProtectoCazaUnac.Listas;
+import co.edu.poo2.ProtectoCazaUnac.Usuario;
+import co.edu.poo2.ProtectoCazaUnac.interfazesGraficas.AnimalesIGU;
+import co.edu.poo2.ProtectoCazaUnac.interfazesGraficas.LoginIGU;
 
 import javax.swing.*;
 import java.awt.*;
@@ -66,7 +72,7 @@ public class UsuarioIGU extends JFrame implements ActionListener {
 
 
         // Leer archivo plano
-        String infoArchivo = LeerArchivo.readFile("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuarios.txt");
+        String infoArchivo = LeerArchivo.readFile("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\archivosplanos\\usuarios.txt");
         lblInformacion = new JLabel("Archivo cargado");
         lblInformacion.setSize(100,100);
         lblInformacion.setLocation(50, 30);
@@ -74,6 +80,7 @@ public class UsuarioIGU extends JFrame implements ActionListener {
         // Crear lista de usuarios
         listaUsers = Listas.crearUsuarios(infoArchivo);
         lblInformacion.setText(lblInformacion.getText() + " :: Lista creada");
+        lblInformacion.setVisible(false);
 
 
 
@@ -93,7 +100,7 @@ public class UsuarioIGU extends JFrame implements ActionListener {
 
         setLayout(null);
         setSize(500,500);
-        setTitle("Login ProtectoCazaUnac ");
+        setTitle("Login ProtectoUnacAnimal ");
 
         setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         setLocation(500,250);
@@ -158,7 +165,7 @@ public class UsuarioIGU extends JFrame implements ActionListener {
     }
     private boolean validarCredenciales(String nombreUsuario, String contrasena) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuarios.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\archivosplanos\\usuarios.txt"));
 
             String linea;
             while ((linea = br.readLine()) != null) {
@@ -188,7 +195,7 @@ public class UsuarioIGU extends JFrame implements ActionListener {
 
     private String buscarUsuarioPorCorreo(String correoElectronico) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuarios.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\archivosplanos\\usuarios.txt"));
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(",");

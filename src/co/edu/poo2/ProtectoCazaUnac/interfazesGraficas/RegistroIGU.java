@@ -1,4 +1,8 @@
-package co.edu.poo2.ProtectoCazaUnac;
+package co.edu.poo2.ProtectoCazaUnac.interfazesGraficas;
+
+import co.edu.poo2.ProtectoCazaUnac.LeerArchivo;
+import co.edu.poo2.ProtectoCazaUnac.Listas;
+import co.edu.poo2.ProtectoCazaUnac.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,7 +74,7 @@ public class RegistroIGU extends JFrame implements ActionListener {
         btnIngresar.setForeground(Color.BLACK);
 
         // Leer archivo plano
-        String infoArchivo = LeerArchivo.readFile("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\usuarios.txt");
+        String infoArchivo = LeerArchivo.readFile("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\archivosplanos\\usuarios.txt");
         lblInformacion = new JLabel("Archivo cargado");
         lblInformacion.setSize(100, 100);
         lblInformacion.setLocation(20, 5);
@@ -78,6 +82,7 @@ public class RegistroIGU extends JFrame implements ActionListener {
         // Crear lista de usuarios
         listaUsers = Listas.crearUsuarios(infoArchivo);
         lblInformacion.setText(lblInformacion.getText() + " :: Lista creada");
+        lblInformacion.setVisible(false);
 
 
         //botonera
@@ -97,7 +102,7 @@ public class RegistroIGU extends JFrame implements ActionListener {
 
         setLayout(null);
         setSize(500, 500);
-        setTitle("Registrarse en ProtectoCazaUnac");
+        setTitle("Registrarse en ProtectoUnacAnimal");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(500, 250);
@@ -146,7 +151,7 @@ public class RegistroIGU extends JFrame implements ActionListener {
     }
 
     private void guardarUsuariosEnArchivo(String nombreArchivo, ArrayList<Usuario> usuarios) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo, true))) {
             for (Usuario user : usuarios) {
                 String linea = user.getNombreCompleto() + "," + user.getCorreoElectronico() + ","
                         + user.getUser() + "," + user.getPassword() + ";";

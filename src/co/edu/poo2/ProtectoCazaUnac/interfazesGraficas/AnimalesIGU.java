@@ -1,4 +1,8 @@
-package co.edu.poo2.ProtectoCazaUnac;
+package co.edu.poo2.ProtectoCazaUnac.interfazesGraficas;
+
+import co.edu.poo2.ProtectoCazaUnac.Animal;
+import co.edu.poo2.ProtectoCazaUnac.LeerArchivo;
+import co.edu.poo2.ProtectoCazaUnac.Listas;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -10,8 +14,7 @@ import java.util.ArrayList;
 
 public class AnimalesIGU extends JFrame implements ActionListener {
 
-    static JButton btnVerAnimales, btnAgregarAnimal, btnEliminarAnimal;
-    static JLabel lblInformacion;
+    static JButton btnVerAnimales, btnAgregarAnimal, btnEliminarAnimal, btnConcientizar;
     static JTable tablaAnimales;
     static DefaultTableModel modeloTabla;
     static ArrayList<Animal> listaAnimales = new ArrayList<>();
@@ -28,8 +31,12 @@ public class AnimalesIGU extends JFrame implements ActionListener {
         btnAgregarAnimal.addActionListener(this);
 
         btnEliminarAnimal = new JButton("Eliminar Animal");
-        btnEliminarAnimal.setBounds(20, 100, 100, 30);
+        btnEliminarAnimal.setBounds(20, 100, 120, 30);
         btnEliminarAnimal.addActionListener(this);
+
+        btnConcientizar = new JButton("Concientización");
+        btnConcientizar.setBounds(20, 140, 120, 30);
+        btnConcientizar.addActionListener(this);
 
         // Configuración de la tabla
         modeloTabla = new DefaultTableModel();
@@ -49,22 +56,24 @@ public class AnimalesIGU extends JFrame implements ActionListener {
 
 
         // Leer archivo plano
-        String infoArchivo = LeerArchivo.readFile("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\animales.txt");
+        String infoArchivo = LeerArchivo.readFile("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\archivosplanos\\animales.txt");
         JLabel lblInformacion = new JLabel("Archivo cargado");
       lblInformacion.setBounds(20,700,100,30);
 
         // Crear lista de usuarios
         listaAnimales = Listas.crearAnimales(infoArchivo);
         lblInformacion.setText(lblInformacion.getText() + " :: Lista creada");
+        lblInformacion.setVisible(false);
 
 
         add(btnAgregarAnimal);
         add(btnVerAnimales);
         add(btnEliminarAnimal);
+        add(btnConcientizar);
         add(lblInformacion);
         add(scrollPane);
         setLayout(null);
-        setTitle("Gestión de Animales");
+        setTitle("Gestión de Animales ProtectoUnacAnimal");
         setSize(1300, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centrar la ventana en la pantalla
@@ -83,12 +92,19 @@ public class AnimalesIGU extends JFrame implements ActionListener {
             agregarAnimal();
         } else if (e.getSource() == btnEliminarAnimal) {
             eliminarAnimal();
+        }else if (e.getSource() == btnConcientizar){
+            // Ocultar ventana actual
+            this.setVisible(false);
+            // Crear y mostrar la ventana de registro de usuario
+            VentanaConcientizacion registroVentana = null;
+            registroVentana = new VentanaConcientizacion();
+            registroVentana.setVisible(true);
         }
     }
 
     private void cargarAnimalesDesdeArchivo() {
         listaAnimales.clear();
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\animales.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\archivosplanos\\animales.txt"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 System.out.println("Leyendo línea: " + linea);
@@ -198,7 +214,7 @@ public class AnimalesIGU extends JFrame implements ActionListener {
     }
 
     private void guardarAnimalesEnArchivo() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\animales.txt"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\archivosplanos\\animales.txt"))) {
             for (Animal animal : listaAnimales) {
                 String linea = String.format("%s,%s,%s,%s,%s,%s,%s",animal.getNombreCientifico(), animal.getNombre(),
                         animal.getConservacion(), animal.getRolEcologico(), animal.getHabitad(),

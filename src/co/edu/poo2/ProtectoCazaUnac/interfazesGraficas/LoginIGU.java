@@ -1,4 +1,4 @@
-package co.edu.poo2.ProtectoCazaUnac;
+package co.edu.poo2.ProtectoCazaUnac.interfazesGraficas;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +15,8 @@ public class LoginIGU extends JFrame implements ActionListener {
         lblDatos = new JLabel("Bienvenido A ProtectoUnacAnimal");
         Font font = new Font("Forte", Font.BOLD, 20); // tipo de fuente
         lblDatos.setFont(font);
-        lblDatos.setLocation(100,30);
-        lblDatos.setSize(290,30);
+        lblDatos.setLocation(80,30);
+        lblDatos.setSize(350,30);
         lblDatos.setForeground(Color.BLACK);
 
         lblImagenUsuario = new JLabel(new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\Inicio.png"));

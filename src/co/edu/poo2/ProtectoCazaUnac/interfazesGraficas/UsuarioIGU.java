@@ -3,8 +3,7 @@ package co.edu.poo2.ProtectoCazaUnac.interfazesGraficas;
 import co.edu.poo2.ProtectoCazaUnac.LeerArchivo;
 import co.edu.poo2.ProtectoCazaUnac.Listas;
 import co.edu.poo2.ProtectoCazaUnac.Usuario;
-import co.edu.poo2.ProtectoCazaUnac.interfazesGraficas.AnimalesIGU;
-import co.edu.poo2.ProtectoCazaUnac.interfazesGraficas.LoginIGU;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,8 +27,9 @@ public class UsuarioIGU extends JFrame implements ActionListener {
 
 
     public UsuarioIGU() throws IOException {
+        getContentPane().setBackground(new Color(200, 200, 255));
         lblImagenUsuario = new JLabel(new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\LoginI.png"));
-        lblImagenUsuario.setLocation(170, 80);
+        lblImagenUsuario.setLocation(170, 50);
         lblImagenUsuario.setSize(150, 150);
 
         lblUser = new JLabel("UserName");
@@ -51,22 +51,29 @@ public class UsuarioIGU extends JFrame implements ActionListener {
         // para que muestre asteriscos en lugar de los caracteres reales
         passwordField.setEchoChar('*');
 
+        btnRegresar = new JButton("Regresar");
+        ImageIcon iconoRegresar = new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\atras2.png");
+        btnRegresar.setIcon(iconoRegresar);
+        btnRegresar.setLocation(100,340);
+        btnRegresar.setSize(140,30);
+        btnRegresar.addActionListener(this);
+        btnRegresar.setForeground(Color.BLACK);
+
         btnIngresar = new JButton("Iniciar sesión");
-        btnIngresar.setLocation(100,340);
-        btnIngresar.setSize(130,30);
+        ImageIcon iconoIniciar = new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\iniciarS.png");
+        btnIngresar.setIcon(iconoIniciar);
+        btnIngresar.setLocation(250,340);
+        btnIngresar.setSize(140,30);
         btnIngresar.addActionListener(this);
         btnIngresar.setForeground(Color.BLACK);
 
 
-        btnRegresar = new JButton("Regresar");
-        btnRegresar.setLocation(250,340);
-        btnRegresar.setSize(130,30);
-        btnRegresar.addActionListener(this);
-        btnRegresar.setForeground(Color.BLACK);
 
         btnPassOlvidada = new JButton("¿Olvidaste tu contraseña o usuario?");
-        btnPassOlvidada.setLocation(120, 380);
-        btnPassOlvidada.setSize(240, 30);
+        ImageIcon iconoOlvidar = new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\olvidar.png");
+        btnPassOlvidada.setIcon(iconoOlvidar);
+        btnPassOlvidada.setLocation(105, 380);
+        btnPassOlvidada.setSize(280, 30);
         btnPassOlvidada.addActionListener(this);
         btnPassOlvidada.setForeground(Color.BLUE);
 
@@ -104,6 +111,8 @@ public class UsuarioIGU extends JFrame implements ActionListener {
 
         setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         setLocation(500,250);
+        this.setResizable(false);
+        setLocationRelativeTo(null);
         setVisible (true);
 
     }

@@ -1,3 +1,9 @@
-Vulpes,Zorro,Preocupacion menor,Depredador,Bosques,avistado Lunes 8 sept Rojizo con una altura de 22 cms,Cerca de la unac
-Sciurus vulgaris,Ardilla,sin riesgo,Consumidor secundario,arboles y bosque,avistada viernes 15 sept ardilla color rojizo,cerca de la Unac
-Psittacoidea,Loro,en peligro de extinción,Consumidor secundario,Palmas y bosques,Avistado el Domingo 15 oct Loro grande de color verde,Laureles
+Vulpes,Zorro,Preocupacion menor,Depredador,Bosques,Avistado Lunes 8 sept Rojizo con una altura de 22 cms,Cerca de la unac Laures
+Panthera onca,Jaguar,Vulnerable,Depredador,Bosques,Jaguar manchado de gran tamaño,Zona boscosa cerca de Laureles
+Didelphis marsupialis,Zarigüeya,Preocupación menor,Omnívoro,Áreas urbanas,Zarigüeya de tamaño mediano,Patio trasero de una casa en Laureles
+Rana Kekembaueri,Rana arlequín,En peligro crítico,Anfibio,Ríos y arroyos,Rana arlequín de colores brillantes,Orilla de un pequeño río en Laureles
+Melopsittacus undulatus,Periquito australiano,No aplica (especie exótica),Aves,Áreas urbanas,Periquito australiano de colores vivos,Parque de Laureles
+Tigrisoma lineatum,Garza tigre,Preocupación menor,Ave,Humedales,Garza tigre de gran tamaño,Humedal en Laureles
+,,,,,,
+,,,,,,
+,,,,,,

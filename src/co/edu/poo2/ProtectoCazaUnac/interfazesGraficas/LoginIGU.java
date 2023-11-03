@@ -11,33 +11,39 @@ public class LoginIGU extends JFrame implements ActionListener {
     static JButton btnNuevoRegistro,btnIngresar;
     static JLabel lblImagenUsuario, lblDatos;
 
+
     public LoginIGU(){
-        lblDatos = new JLabel("Bienvenido A ProtectoUnacAnimal");
+        getContentPane().setBackground(new Color(200, 200, 255));
+        /*lblDatos = new JLabel("Bienvenido A ProtectoUnacAnimal");
         Font font = new Font("Forte", Font.BOLD, 20); // tipo de fuente
         lblDatos.setFont(font);
         lblDatos.setLocation(80,30);
         lblDatos.setSize(350,30);
-        lblDatos.setForeground(Color.BLACK);
+        lblDatos.setForeground(Color.BLACK);*/
 
         lblImagenUsuario = new JLabel(new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\Inicio.png"));
-        lblImagenUsuario.setLocation(120, 60);
-        lblImagenUsuario.setSize(250, 250);
+        lblImagenUsuario.setLocation(100, 60);
+        lblImagenUsuario.setSize(300, 300);
 
         btnNuevoRegistro = new JButton("Registrarse");
-        btnNuevoRegistro.setLocation(110,320);
+        ImageIcon iconoRegistro = new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\registro.png");
+        btnNuevoRegistro.setIcon(iconoRegistro);
+        btnNuevoRegistro.setLocation(110,380);
         btnNuevoRegistro.setSize(130,30);
         btnNuevoRegistro.addActionListener(this);
         btnNuevoRegistro.setForeground(Color.BLACK);
 
         btnIngresar = new JButton("Ingresar");
-        btnIngresar.setLocation(270,320);
+        ImageIcon iconoIngresar = new ImageIcon("C:\\Users\\RoyMR\\Documents\\POO2-2023\\ProtectoCazaUnac\\src\\co\\edu\\poo2\\ProtectoCazaUnac\\img\\ingresar.png");
+        btnIngresar.setIcon(iconoIngresar);
+        btnIngresar.setLocation(270,380);
         btnIngresar.setSize(130,30);
         btnIngresar.addActionListener(this);
         btnIngresar.setForeground(Color.BLACK);
 
 
 
-        add(lblDatos);
+        //add(lblDatos);
         add(btnNuevoRegistro);
         add(btnIngresar);
         add(lblImagenUsuario);
@@ -48,6 +54,8 @@ public class LoginIGU extends JFrame implements ActionListener {
 
         setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
         setLocation(500,250);
+        setLocationRelativeTo(null);
+        this.setResizable(false);
         setVisible (true);
 
     }
